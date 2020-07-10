@@ -21,6 +21,30 @@ class User(db.Model):
     def __repr__(self):
 
         return '<User: {0}>'.format(self.username)
+    
+    @staticmethod
+    def read_user(username):
+        
+        user = User.query.filter_by(username=username).first()
+        
+        return user
+        
+    @staticmethod
+    def read_by_key(key):
+        
+        user = User.query.filter_by(key=key).first()
+        
+        return user    
+    
+    @staticmethod
+    def create(username, password, email):
+        
+        user = User(username=username, password=password, email=email)
+        
+        db.session.add(user)
+        db.session.commit()
+        
+        return user
         
     @staticmethod
     def login(username, password):
@@ -50,14 +74,14 @@ class User(db.Model):
     @staticmethod
     def _get_key(username):
 
-        user = User.query.filter_by(username=username).first()
+        user = User.read_user(username)
         
         return user.key
 
     @staticmethod
     def set_key(username):
     
-        user = User.query.filter_by(username=username).first()
+        user = User.read_user(username)
         key = generate_key()
         
         User.delete_key(username)
@@ -69,7 +93,7 @@ class User(db.Model):
     def delete_key(key):
     
         try:
-            user = User.query.filter_by(key=key).first()
+            user = User.read_by_key(key)
             user.key = ""
             db.session.commit()
         except:
@@ -79,7 +103,7 @@ class User(db.Model):
     def verify_key(key):
 
         try:
-            user = User.query.filter_by(key=key).first()
+            user = User.read_by_key(key)
             return True
         except:
             return False
@@ -107,13 +131,32 @@ class ToDo(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     task = db.Column(db.String(80))
-    finished = db.Column(db.Boolean)
+    finished = db.Column(db.Boolean, default=False)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
     def __repr__(self):
 
         return '<Todo: {0}>'.format(self.id)
+        
+    def finished(self):
+    
+        self.finished = True
+        db.session.commit()
+        
+    def unfinish(self):
+    
+        self.finished = False
+        db.session.commit()
+        
+    @staticmethod
+    def create(task):
+        todo = ToDo(task=task)
+        
+        db.session.add(todo)
+        db.session.commit()
+        
+        return todo
         
     @staticmethod
     def update(self, _id, values):
@@ -144,6 +187,22 @@ class Event(db.Model):
     def __repr__(self):
 
         return '<Event: {0}>'.format(self.name)
+        
+    @staticmethod
+    def create(name, description, event_date, date):
+        
+        event = Event(name=name, description=description, event_date=event_date, date=date)
+        
+        db.session.add(event)
+        db.session.commit()
+        
+        return event
+        
+    @staticmethod
+    def update(self, _id, values):
+    
+        event = Event.query.filter_by(id=_id).update(values)
+        db.session.commit()
     
     @staticmethod
     def delete(self, _id):
