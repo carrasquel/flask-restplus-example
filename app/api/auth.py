@@ -6,8 +6,11 @@ from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
 from app.server import server
+from app.models import User
 
 from .utils import token_required
+
+db = server.database
 
 api = server.get_api()
 app = server.get_app()
@@ -25,20 +28,18 @@ class AuthLoginResource(Resource):
     @ns.expect(login_model)
     def post(self):
 
-        dbo = app.user_dbo
-
         payload = api.payload
 
         username = payload["username"]
         password = payload["password"]
         
-        if not dbo.verify_username(username):
+        if not User.verify_username(username):
             return {"message": "Invalid credentials"}, 401
         
-        if not dbo.login(username, password):
+        if not User.login(username, password):
             return {"message": "Invalid credentials"}, 401
 
-        key = dbo._get_key(username)
+        key = User.get_key(username)
 
         response = {
             "api_key": key
@@ -54,10 +55,8 @@ class AuthLogoutResource(Resource):
     @token_required
     def get(self):
 
-        dbo = app.user_dbo
-
         key = request.headers['X-API-KEY']
 
-        dbo._delete_key(key)
+        User.delete_key(key)
 
         return {"message": "Logout succesfully"}

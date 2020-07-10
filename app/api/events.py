@@ -1,11 +1,16 @@
 # app/api/events.py
 
 
-from flask_restful import reqparse, Resource
-from app.models import Event
-from app import db
-from app import status
-import datetime
+from flask import request
+from flask_restplus import Resource, fields
+from playhouse.shortcuts import model_to_dict
+
+from app.server import server
+from app.models import User, Event
+
+from .utils import token_required
+
+db = server.database
 
 
 class EventAPI(Resource):
