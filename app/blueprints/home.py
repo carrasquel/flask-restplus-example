@@ -1,9 +1,8 @@
-# app/home/views.py
+# app/blueprints/home.py
 
 from flask import render_template, session, current_app
 
-from . import home
-
+home = Blueprint('home', __name__)
 
 @home.route('/')
 def homepage():

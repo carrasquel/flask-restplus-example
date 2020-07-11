@@ -10,8 +10,6 @@ from app.models import User, Event
 
 from .utils import token_required
 
-db = server.database
-
 
 class EventAPI(Resource):
 

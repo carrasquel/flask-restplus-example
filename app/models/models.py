@@ -1,9 +1,7 @@
 # app/models/models.py
 
-from app.server import server
 from .utils import hash_password, verify_password, generate_key
-
-db = server.database
+from .. import db
 
 
 class User(db.Model):

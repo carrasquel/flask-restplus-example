@@ -2,6 +2,8 @@
 
 from flask import Blueprint
 
-home = Blueprint('home', __name__)
+def init_app(app):
 
-from . import views
+    from .home import home_blueprint
+    
+    app.register_blueprint(home_blueprint)

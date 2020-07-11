@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 # app/api/auth.py
 
-from flask import request
+from flask import request, current_app
 from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
-from app.server import server
 from app.models import User
 
 from .utils import token_required
 
-db = server.database
+app = current_app
+api = app.get_api()
 
-api = server.get_api()
-app = server.get_app()
 ns = server.get_namespace("auth")
 
 login_model = api.model("login_model", {
