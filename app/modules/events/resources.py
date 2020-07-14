@@ -7,9 +7,10 @@ from flask import request
 from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
-from app.models import User, Event
+from app.extensions.api import token_required
+from app.modules.auth import User
 
-from .utils import token_required
+from .models import Event
 
 
 class EventAPI(Resource):

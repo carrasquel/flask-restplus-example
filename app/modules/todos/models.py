@@ -1,7 +1,7 @@
 # encoding: utf-8
 # app/modules/auth/__init__.py
 
-from .. import db
+from app.extensions import db
 
 
 class ToDo(db.Model):

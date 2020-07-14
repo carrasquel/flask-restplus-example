@@ -1,8 +1,8 @@
 # encoding: utf-8
 # app/modules/auth/__init__.py
 
+from app.extensions import db
 from .utils import hash_password, verify_password, generate_key
-from .. import db
 
 
 class User(db.Model):

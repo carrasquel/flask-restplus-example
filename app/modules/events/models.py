@@ -1,6 +1,7 @@
 # encoding: utf-8
 
-from .. import db
+from app.extensions import db
+
 
 class Event(db.Model):
 
