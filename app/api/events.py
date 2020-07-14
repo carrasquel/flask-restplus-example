@@ -5,7 +5,6 @@ from flask import request
 from flask_restplus import Resource, fields
 from playhouse.shortcuts import model_to_dict
 
-from app.server import server
 from app.models import User, Event
 
 from .utils import token_required

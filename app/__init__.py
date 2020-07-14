@@ -31,7 +31,7 @@ class Server(Flask):
 
         self.app = Flask(__name__)
         self.config.from_object(__name__)
-        self.db = SQLAlchemy(self)
+        self.db = db
 
     def set_api(self, api):
 
@@ -51,12 +51,12 @@ class Server(Flask):
                 
                 return namespace
 
-    def run(self):
+    def run_app(self):
         
         port = self.config["PORT"]
         self.run(port=port, host="0.0.0.0")
 
-def create_app(config_name):
+def create_app():
 
     app = Server(__name__)
     

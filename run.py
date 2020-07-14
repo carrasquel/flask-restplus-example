@@ -5,9 +5,8 @@ import os
 # local imports
 from app import create_app
 
-app = create_app("development")
+app = create_app()
 
 if __name__ == "__main__":
 
-    app.run()
-    # app.run(host='0.0.0.0', port=8080)
+    app.run_app()
