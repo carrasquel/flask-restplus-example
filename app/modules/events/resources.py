@@ -2,69 +2,46 @@
 
 # app/api/events.py
 
+import datetime
 
 from flask import request
-from flask_restplus import Resource, fields
+from flask_restplus import Namespace, Resource, fields
 from playhouse.shortcuts import model_to_dict
 
-from app.extensions.api import token_required
+from app.extensions.api import api
+from app.extensions import status
 from app.modules.auth import User
+from app.modules.api.utils import token_required
 
 from .models import Event
 
+ns = Namespace('events', description='Namespace for events')
 
-class EventAPI(Resource):
-
-    def get(self, id):
-
-        e = Event.query.filter_by(id=id).first()
-
-        event = e.__dict__
-        event["date"] = event["date"].isoformat()
-        del event['_sa_instance_state']
-        
-        return event
-
-    def delete(self, id):
-
-        event = Event.query.filter_by(id=id).delete()
-
-        db.session.commit()
-        return '', status.HTTP_204_NO_CONTENT
-
-    def put(self, id):
-
-        event = Event.query.filter_by(id=id).first()
-
-        parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help='Name cannot be blank!')
-        parser.add_argument('description', type=str, required=True, help='Description cannot be blank!')
-        parser.add_argument('event_date', type=str, required=True, help='Date cannot be blank!')
-        args = parser.parse_args()
-
-        event.name = args["name"]
-        event.description = args["description"]
-        event.event_date = args["event_date"]
-        event.date = datetime.datetime.now()
-
-        db.session.commit()
-
-        e = Event.query.filter_by(id=event.id).first()
-
-        event = e.__dict__
-        event["date"] = event["date"].isoformat()
-        del event['_sa_instance_state']
-        
-        return event, status.HTTP_202_ACCEPTED
+event_model = api.model("event_model", {
+    'name': fields.String(required=True, description='Event Name'),
+    'description': fields.String(required=True, description='Event Description'),
+    'event_date': fields.String(required=True, description='Event Date')
+})
 
 
-class EventListAPI(Resource):
-
+@ns.route('/')
+class EventCollectionResource(Resource):
+    
+    @api.doc(security='apikey')
+    @token_required
     def get(self):
+
+        key = request.headers['X-API-KEY']
+
+        user = User.read_by_key(key)
+
+        events = user.events
+
+        print(events)
 
         result = list()
 
-        for e in Event.query.all():
+        for e in events:
 
             event = e.__dict__
             event["date"] = event["date"].isoformat()
@@ -74,28 +51,64 @@ class EventListAPI(Resource):
 
         return result
 
+    @api.doc(security='apikey')
+    @token_required
+    @ns.expect(event_model)
     def post(self):
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True, help='Name cannot be blank!')
-        parser.add_argument('description', type=str, required=True, help='Description cannot be blank!')
-        parser.add_argument('event_date', type=str, required=True, help='Date cannot be blank!')
-        args = parser.parse_args()
+        payload = api.payload
 
-        now = datetime.datetime.now()
-        
-        event = Event(name=args["name"],
-                      description=args["description"],
-                      event_date=args["event_date"],
-                      date=now)
+        payload["date"] = datetime.datetime.now()
 
-        db.session.add(event)
-        db.session.commit()
+        event = Event.create(**payload)
 
-        e = Event.query.filter_by(id=event.id).first()
+        key = request.headers['X-API-KEY']
+
+        user = User.read_by_key(key)
+
+        user.add_event(event)
 
         event = e.__dict__
         event["date"] = event["date"].isoformat()
         del event['_sa_instance_state']
         
         return event, status.HTTP_201_CREATED
+
+@ns.route('/<int:event_id>')
+class EventResource(Resource):
+
+    @api.doc(security='apikey')
+    @token_required
+    def get(self, event_id):
+
+        event = Event.read_event(event_id)
+
+        event = e.__dict__
+        event["date"] = event["date"].isoformat()
+        del event['_sa_instance_state']
+        
+        return event
+
+    @api.doc(security='apikey')
+    @token_required
+    def delete(self, event_id):
+
+        event = Event.delete()
+
+        return "Event deleted", status.HTTP_204_NO_CONTENT
+
+    @api.doc(security='apikey')
+    @token_required
+    def put(self, event_id):
+
+        payload = api.paylaod
+
+        Event.update(payload)
+
+        event = Event.read_event(event_id)
+
+        event = e.__dict__
+        event["date"] = event["date"].isoformat()
+        del event['_sa_instance_state']
+        
+        return event, status.HTTP_202_ACCEPTED

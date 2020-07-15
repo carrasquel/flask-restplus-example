@@ -8,5 +8,6 @@ def init_app(app):
     from .todos import init_app as init_todos
 
     init_auth(app)
+    init_events(app)
 
     

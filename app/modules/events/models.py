@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+import datetime
+
 from app.extensions import db
 
 
@@ -18,7 +20,14 @@ class Event(db.Model):
     def __repr__(self):
 
         return '<Event: {0}>'.format(self.name)
+    
+    @staticmethod
+    def read_event(_id):
         
+        event = Event.query.filter_by(id=_id).first()
+        
+        return event
+
     @staticmethod
     def create(name, description, event_date, date):
         
@@ -31,6 +40,8 @@ class Event(db.Model):
         
     @staticmethod
     def update(self, _id, values):
+
+        values["date"] = datetime.datetime.now()
     
         event = Event.query.filter_by(id=_id).update(values)
         db.session.commit()
