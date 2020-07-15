@@ -29,6 +29,16 @@ class User(db.Model):
         user = User.query.filter_by(username=username).first()
         
         return user
+
+    @staticmethod
+    def verify_username(username):
+        
+        user = User.read_user(username)
+
+        if user:
+            return True
+        
+        return False
         
     @staticmethod
     def read_by_key(key):

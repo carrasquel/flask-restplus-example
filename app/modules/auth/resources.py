@@ -16,6 +16,34 @@ login_model = api.model("login_model", {
     'password': fields.String(required=True, description='Password')
 })
 
+signup_model = api.model("signup_model", {
+    'username': fields.String(required=True, description='Username'),
+    'password': fields.String(required=True, description='Password'),
+    'email': fields.String(required=True, description='Email')
+})
+
+
+@ns.route('/signup')
+class AuthSignUpResource(Resource):
+
+    @ns.expect(signup_model)
+    def post(self):
+
+        payload = api.payload
+
+        username = payload["username"]
+        
+        if User.verify_username(username):
+            return {"message": "User already exist"}, 401
+
+        user = User.create(**payload)
+
+        response = {
+            "message": "User created"
+        }
+
+        return response
+
 
 @ns.route('/login')
 class AuthLoginResource(Resource):
