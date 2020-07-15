@@ -12,7 +12,7 @@ class ToDo(db.Model):
     task = db.Column(db.String(80))
     finished = db.Column(db.Boolean, default=False)
     
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
     def __repr__(self):
 

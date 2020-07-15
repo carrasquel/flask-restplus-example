@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 DATABASE = {
     'name': 'id.db'
 }
-SQLALCHEMY_DATABASE_URI = 'sqlite:///id.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///C:\\repo\\flask-restplus\\foo.db'
 
 DEBUG = True
 PORT = 5000

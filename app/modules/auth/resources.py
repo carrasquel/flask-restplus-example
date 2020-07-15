@@ -32,7 +32,7 @@ class AuthSignUpResource(Resource):
         payload = api.payload
 
         username = payload["username"]
-        
+                
         if User.verify_username(username):
             return {"message": "User already exist"}, 401
 

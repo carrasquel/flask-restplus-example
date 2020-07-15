@@ -7,7 +7,7 @@ from .utils import hash_password, verify_password, generate_key
 
 class User(db.Model):
 
-    __tablename__ = 'todos'
+    __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
 
@@ -49,6 +49,8 @@ class User(db.Model):
     
     @staticmethod
     def create(username, password, email):
+
+        password = hash_password(password)
         
         user = User(username=username, password=password, email=email)
         
@@ -83,7 +85,7 @@ class User(db.Model):
         return True
     
     @staticmethod
-    def _get_key(username):
+    def get_key(username):
 
         user = User.read_user(username)
         
