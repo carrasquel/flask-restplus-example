@@ -33,24 +33,4 @@ def init_app(app):
     
     api = create_api(app)
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
 
-        app = server.get_app()
-        dbo = app.user_dbo
-
-        token = None
-
-        if 'X-API-KEY' in request.headers:
-            token = request.headers['X-API-KEY']
-
-        if not token:
-            return {'message' : 'Key is missing.'}, 401
-
-        if not dbo.verify_key(token):
-            return {'message' : 'Invalid credentials!!!'}, 401
-
-        return f(*args, **kwargs)
-
-    return decorated

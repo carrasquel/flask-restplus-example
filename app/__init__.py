@@ -19,6 +19,10 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(__name__)
 
+    from app.extensions import db
+
+    migrate = Migrate(app, db)
+
     from . import extensions
     extensions.init_app(app)
 
