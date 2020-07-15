@@ -9,4 +9,4 @@ app = create_app()
 
 if __name__ == "__main__":
 
-    app.run_app()
+    app.run(port=8030, host="0.0.0.0")

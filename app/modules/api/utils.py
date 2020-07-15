@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+from functools import wraps
+
+from flask import request
+
 from app.modules.auth import User
 
 def token_required(f):

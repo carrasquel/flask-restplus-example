@@ -3,4 +3,8 @@
 
 def init_app(app):
 
-    pass
+    from .auth import init_app as init_auth
+
+    init_auth(app)
+
+    

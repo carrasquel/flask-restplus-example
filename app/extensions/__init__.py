@@ -7,13 +7,13 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 login_manager = LoginManager()
 
-from . import api
-
-
 def init_app(app):
     """
     Application extensions initialization.
     """
+
+    from . import api
+
     extensions = (db, api, login_manager,)
 
     for extension in extensions:

@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 # app/api/auth.py
 
-from flask import request, current_app
-from flask_restplus import Resource, fields
+from flask import request
+from flask_restplus import Namespace, Resource, fields
 from playhouse.shortcuts import model_to_dict
 
-from app.models import User
+from app.extensions.api import api
+from app.modules.auth import User
+from app.modules.api.utils import token_required
 
-from .utils import token_required
-
-app = current_app
-api = app.get_api()
-
-ns = app.get_namespace("auth")
+ns = Namespace('auth', description='Namespace for authentication')
 
 login_model = api.model("login_model", {
     'username': fields.String(required=True, description='Username'),
