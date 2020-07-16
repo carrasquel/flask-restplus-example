@@ -36,9 +36,7 @@ class EventCollectionResource(Resource):
         user = User.read_by_key(key)
 
         events = user.events
-
-        print(events)
-
+        
         result = list()
 
         for e in events:
@@ -65,8 +63,6 @@ class EventCollectionResource(Resource):
         key = request.headers['X-API-KEY']
 
         user = User.read_by_key(key)
-
-        print(user)
 
         user.add_event(event)
 
@@ -102,7 +98,7 @@ class EventResource(Resource):
         if not user.owns_event(event_id):
             return "Not your event", status.HTTP_401_UNAUTHORIZED
 
-        event = Event.delete(event_id)
+        user.delete_event(event_id)
 
         return "Event deleted", status.HTTP_204_NO_CONTENT
 

@@ -134,7 +134,8 @@ class User(db.Model):
 
         for todo in self.todos:
             if todo.id == todo_id:
-                db.session.delete(event)
+                db.session.delete(todo)
+                db.session.commit()
                 
                 return True
         
@@ -158,6 +159,7 @@ class User(db.Model):
         for event in self.events:
             if event.id == event_id:
                 db.session.delete(event)
+                db.session.commit()
                 
                 return True
         

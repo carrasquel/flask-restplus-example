@@ -35,8 +35,6 @@ class TodoCollectionResource(Resource):
 
         todos = user.todos
 
-        print(todos)
-
         result = list()
 
         for t in todos:
@@ -92,7 +90,7 @@ class TodoResource(Resource):
         if not user.owns_todo(todo_id):
             return "Not your todo", status.HTTP_401_UNAUTHORIZED
 
-        todo = ToDo.delete(todo_id)
+        user.delete_todo(todo_id)
 
         return "Todo deleted", status.HTTP_204_NO_CONTENT
 
