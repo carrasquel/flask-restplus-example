@@ -15,7 +15,7 @@ class Event(db.Model):
     event_date = db.Column(db.String(20))
     date = db.Column(db.DateTime())
     
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
 

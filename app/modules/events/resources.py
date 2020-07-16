@@ -60,11 +60,13 @@ class EventCollectionResource(Resource):
 
         payload["date"] = datetime.datetime.now()
 
-        event = Event.create(**payload)
+        event = Event(**payload)
 
         key = request.headers['X-API-KEY']
 
         user = User.read_by_key(key)
+
+        print(user)
 
         user.add_event(event)
 

@@ -124,6 +124,7 @@ class User(db.Model):
     def add_todo(self, todo):
     
         self.todos.append(todo)
+        db.session.commit()
         
     def get_todos(self):
     
@@ -150,6 +151,7 @@ class User(db.Model):
     def add_event(self, event):
     
         self.events.append(event)
+        db.session.commit()
 
     def delete_event(self, event_id):
 

@@ -58,9 +58,8 @@ class TodoCollectionResource(Resource):
         todo = ToDo.create(**payload)
 
         key = request.headers['X-API-KEY']
-
+        
         user = User.read_by_key(key)
-
         user.add_todo(todo)
 
         todo = todo.__dict__
