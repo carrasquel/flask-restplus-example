@@ -120,7 +120,7 @@ class User(db.Model):
             return True
         except:
             return False
-            
+    
     def add_todo(self, todo):
     
         self.todos.append(todo)
@@ -128,11 +128,47 @@ class User(db.Model):
     def get_todos(self):
     
         return self.todos
+
+    def delete_todo(self, todo_id):
+
+        for todo in self.todos:
+            if todo.id == todo_id:
+                db.session.delete(event)
+                
+                return True
         
+        return False
+        
+    def owns_todo(self, todo_id):
+
+        for todo in self.todos:
+            if todo.id == todo_id:
+                return True
+        
+        return False
+    
     def add_event(self, event):
     
         self.events.append(event)
+
+    def delete_event(self, event_id):
+
+        for event in self.events:
+            if event.id == event_id:
+                db.session.delete(event)
+                
+                return True
+        
+        return False
         
     def get_events(self):
     
         return self.events
+
+    def owns_event(self, event_id):
+
+        for event in self.events:
+            if event.id == event_id:
+                return True
+        
+        return False

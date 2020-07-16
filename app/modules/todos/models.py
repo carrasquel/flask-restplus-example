@@ -17,6 +17,13 @@ class ToDo(db.Model):
     def __repr__(self):
 
         return '<Todo: {0}>'.format(self.id)
+
+    @staticmethod
+    def read_todo(_id):
+        
+        todo = ToDo.query.filter_by(id=_id).first()
+        
+        return todo
         
     def finished(self):
     

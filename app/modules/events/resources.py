@@ -93,13 +93,27 @@ class EventResource(Resource):
     @token_required
     def delete(self, event_id):
 
-        event = Event.delete()
+        key = request.headers['X-API-KEY']
+
+        user = User.read_by_key(key)
+
+        if not user.owns_event(event_id):
+            return "Not your event", status.HTTP_401_UNAUTHORIZED
+
+        event = Event.delete(event_id)
 
         return "Event deleted", status.HTTP_204_NO_CONTENT
 
     @api.doc(security='apikey')
     @token_required
     def put(self, event_id):
+
+        key = request.headers['X-API-KEY']
+
+        user = User.read_by_key(key)
+
+        if not user.owns_event(event_id):
+            return "Not your event", status.HTTP_401_UNAUTHORIZED
 
         payload = api.paylaod
 
