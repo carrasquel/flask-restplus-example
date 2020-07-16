@@ -39,8 +39,7 @@ class TodoCollectionResource(Resource):
 
         for t in todos:
 
-            todo = t.__dict__
-            del todo['_sa_instance_state']
+            t.to_dict()
 
             result.append(todo)
 
@@ -74,8 +73,7 @@ class TodoResource(Resource):
 
         todo = ToDo.read_todo(todo_id)
 
-        todo = todo.__dict__
-        del todo['_sa_instance_state']
+        todo = todo.to_dict()
         
         return todo
 
@@ -111,7 +109,6 @@ class TodoResource(Resource):
 
         todo = ToDo.read_event(todo_id)
 
-        todo = todo.__dict__
-        del todo['_sa_instance_state']
+        todo = todo.to_dict()
         
         return todo, status.HTTP_202_ACCEPTED

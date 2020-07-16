@@ -56,5 +56,12 @@ class ToDo(db.Model):
         todo = ToDo.query.filter_by(id=_id).first()
         db.session.delete(todo)
         db.session.commit()
+
+    def to_dict(self):
+
+        result = self.__dict__
+        del result['_sa_instance_state']
+
+        return result
     
 
