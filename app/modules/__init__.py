@@ -9,5 +9,6 @@ def init_app(app):
 
     init_auth(app)
     init_events(app)
+    init_todos(app)
 
     
