@@ -2,7 +2,7 @@
 
 This project is a Flask API interface for front-end development and practice, it supports auth, events and todos.
 
-# Requirements
+## Requirements
 
 In order to execute this web application install the Python requirements.
 
@@ -10,7 +10,7 @@ In order to execute this web application install the Python requirements.
 >>> pip install -r requirements.txt
 ```
 
-# Setup
+## Setup
 
 This application uses *Flask_Migrate* to perform database migrations. export the *FLASK_APP* environment variable with the value, *run.py*, then initialize your database.
 
@@ -30,7 +30,7 @@ and finally to upgrade your model schemas to the database.
 >>> flask db upgrade
 ```
 
-# Execution
+## Execution
 
 After you have setup correctly your database, the only thing to do next, is tu run your application.
 
@@ -38,7 +38,7 @@ After you have setup correctly your database, the only thing to do next, is tu r
 >>> flask run
 ```
 
-# API Documentation
+## API Documentation
 
 You will find the api documentation in a Swagger UI in the following url
 
