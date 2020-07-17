@@ -45,7 +45,7 @@ class ToDo(db.Model):
         return todo
         
     @staticmethod
-    def update(self, _id, values):
+    def update(_id, values):
     
         todo = ToDo.query.filter_by(id=_id).update(values)
         db.session.commit()

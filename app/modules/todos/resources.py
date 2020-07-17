@@ -39,7 +39,7 @@ class TodoCollectionResource(Resource):
 
         for t in todos:
 
-            t.to_dict()
+            todo = t.to_dict()
 
             result.append(todo)
 
@@ -94,6 +94,7 @@ class TodoResource(Resource):
 
     @api.doc(security='apikey')
     @token_required
+    @ns.expect(todo_model)
     def put(self, todo_id):
 
         key = request.headers['X-API-KEY']
@@ -103,11 +104,11 @@ class TodoResource(Resource):
         if not user.owns_todo(todo_id):
             return "Not your todo", status.HTTP_401_UNAUTHORIZED
 
-        payload = api.paylaod
+        payload = api.payload
 
-        ToDo.update(payload)
+        ToDo.update(todo_id, payload)
 
-        todo = ToDo.read_event(todo_id)
+        todo = ToDo.read_todo(todo_id)
 
         todo = todo.to_dict()
         

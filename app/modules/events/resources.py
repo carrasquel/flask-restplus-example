@@ -113,14 +113,12 @@ class EventResource(Resource):
         if not user.owns_event(event_id):
             return "Not your event", status.HTTP_401_UNAUTHORIZED
 
-        payload = api.paylaod
+        payload = api.payload
 
-        Event.update(payload)
+        Event.update(event_id, payload)
 
         event = Event.read_event(event_id)
 
-        event = e.__dict__
-        event["date"] = event["date"].isoformat()
-        del event['_sa_instance_state']
+        event = event.to_dict()
         
         return event, status.HTTP_202_ACCEPTED

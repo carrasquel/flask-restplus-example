@@ -39,7 +39,7 @@ class Event(db.Model):
         return event
         
     @staticmethod
-    def update(self, _id, values):
+    def update(_id, values):
 
         values["date"] = datetime.datetime.now()
     
@@ -52,3 +52,11 @@ class Event(db.Model):
         todo = ToDo.query.filter_by(id=_id).first()
         db.session.delete(todo)
         db.session.commit()
+
+    def to_dict(self):
+
+        result = self.__dict__
+        result["date"] = result["date"].isoformat()
+        del result['_sa_instance_state']
+
+        return result
