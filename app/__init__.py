@@ -3,6 +3,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 # configure our database
 DATABASE = {
@@ -28,5 +29,7 @@ def create_app():
 
     from . import modules
     modules.init_app(app)
+
+    CORS(app)
 
     return app
