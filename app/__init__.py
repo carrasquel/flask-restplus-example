@@ -1,5 +1,7 @@
 # app/__init__.py
 
+import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,7 +11,7 @@ from flask_cors import CORS
 DATABASE = {
     'name': 'id.db'
 }
-SQLALCHEMY_DATABASE_URI = 'sqlite:///C:\\repo\\flask-restplus-example\\database.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///{}\\database.db'.format(os.getcwd())
 
 DEBUG = True
 PORT = 5000
