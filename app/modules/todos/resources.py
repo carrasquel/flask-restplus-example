@@ -58,8 +58,7 @@ class TodoCollectionResource(Resource):
         user = User.read_by_key(key)
         user.add_todo(todo)
 
-        todo = todo.__dict__
-        del todo['_sa_instance_state']
+        todo = todo.to_dict()
         
         return todo, status.HTTP_201_CREATED
 
