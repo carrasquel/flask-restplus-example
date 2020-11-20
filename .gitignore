@@ -12,9 +12,6 @@ __pycache__/
 # Flask Migrations
 migrations/
 
-# Database
-*.db
-
 # Distribution / packaging
 .Python
 build/
