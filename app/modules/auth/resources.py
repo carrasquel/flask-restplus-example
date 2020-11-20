@@ -3,7 +3,6 @@
 
 from flask import request
 from flask_restplus import Namespace, Resource, fields
-from playhouse.shortcuts import model_to_dict
 
 from app.extensions.api import api
 from app.modules.auth import User
