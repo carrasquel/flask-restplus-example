@@ -1,10 +1,14 @@
+import os
+
 def get_app():
     
     from app import create_app
     
     app = create_app()
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///database.db'
+    database_uri = value = os.getenv("DATABASE_URL", 'sqlite:///database.db')
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 
     return app
 
