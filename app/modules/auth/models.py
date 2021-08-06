@@ -12,8 +12,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     username = db.Column(db.String(20))
-    password = db.Column(db.String(20))
-    key = db.Column(db.String(20), default="")
+    password = db.Column(db.String(32))
+    key = db.Column(db.String(32), default="")
     email = db.Column(db.String(20))
     
     todos = db.relationship('ToDo', backref='user', lazy=True)
