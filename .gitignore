@@ -9,9 +9,6 @@ __pycache__/
 # VS Code settings
 .vscode/
 
-# Flask Migrations
-migrations/
-
 # Distribution / packaging
 .Python
 build/
