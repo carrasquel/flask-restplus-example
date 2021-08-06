@@ -11,7 +11,7 @@ from flask_cors import CORS
 DATABASE = {
     'name': 'id.db'
 }
-SQLALCHEMY_DATABASE_URI = 'sqlite:///{}\\database.db'.format(os.getcwd())
+SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", 'sqlite:///database.db')
 
 DEBUG = True
 PORT = 5000
