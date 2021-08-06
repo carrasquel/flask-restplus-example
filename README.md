@@ -30,6 +30,12 @@ and finally to upgrade your model schemas to the database.
 >>> flask db upgrade
 ```
 
+## Remote Migration
+
+```
+heroku run python manage.py db migrate --app app-name
+```
+
 ## Execution
 
 After you have setup correctly your database, the only thing to do next, is tu run your application.
