@@ -51,7 +51,7 @@ class EventCollectionResource(Resource):
     @ns.expect(event_model)
     def post(self):
 
-        payload = api.payload
+        payload = api.payload["event"]
 
         payload["date"] = datetime.datetime.now()
 
