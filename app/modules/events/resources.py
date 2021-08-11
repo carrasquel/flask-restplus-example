@@ -38,7 +38,7 @@ class EventCollectionResource(Resource):
         
         result = list()
 
-        for e in events:
+        for event in events:
 
             event = event.to_dict()
 
