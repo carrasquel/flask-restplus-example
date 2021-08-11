@@ -49,8 +49,8 @@ class Event(db.Model):
     @staticmethod
     def delete(self, _id):
     
-        todo = ToDo.query.filter_by(id=_id).first()
-        db.session.delete(todo)
+        event = Event.query.filter_by(id=_id).first()
+        db.session.delete(event)
         db.session.commit()
 
     def to_dict(self):
@@ -60,3 +60,4 @@ class Event(db.Model):
         del result['_sa_instance_state']
 
         return result
+        

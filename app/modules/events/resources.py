@@ -65,9 +65,7 @@ class EventCollectionResource(Resource):
 
         user.add_event(event)
 
-        event = e.__dict__
-        event["date"] = event["date"].isoformat()
-        del event['_sa_instance_state']
+        event = event.to_dict()
         
         return event, status.HTTP_201_CREATED
 
@@ -80,9 +78,7 @@ class EventResource(Resource):
 
         event = Event.read_event(event_id)
 
-        event = e.__dict__
-        event["date"] = event["date"].isoformat()
-        del event['_sa_instance_state']
+        event = event.to_dict()
         
         return event
 
