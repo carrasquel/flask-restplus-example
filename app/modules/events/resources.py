@@ -40,9 +40,7 @@ class EventCollectionResource(Resource):
 
         for e in events:
 
-            event = e.__dict__
-            event["date"] = event["date"].isoformat()
-            del event['_sa_instance_state']
+            event = event.to_dict()
 
             result.append(event)
 
