@@ -17,7 +17,9 @@ venv:
 
 serve:
 	(\
+		pkill flask ; \
 		source ./venv/bin/activate ; \
-		flask run \
+		flask run & sleep 1; \
+		sleep 2 && xdg-open 'http://localhost:5000/api/docs' \
 	)
 
